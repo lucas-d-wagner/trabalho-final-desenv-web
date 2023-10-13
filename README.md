@@ -1,6 +1,15 @@
 # Trabalho Final da Disciplina de Desenvolvimento WEB 2023/02
+Este repositório contem os fontes do trabalho final da disciplina de Desenvolvimento Web, semestre 2023/02.\
+O tema do trabalho foi deixado livre, porém foram propostos os seguintes requisitos funcionais:
+
+    * Deve permitir manipulação do banco de dados via software;
+    * Deve ter um frontend permitindo uma interação adequada ao usuário (pode ser usado um framework de frontend como o bootstrap ou materialize);
+    * Deve processar dados e não apenas exibir, ou seja, de acordo com a interação do usuário, devem existir cálculos, alterações dinâmicas e não com resultados fixos;
+    * É necessário que o código possa rodar em qualquer maquina com o ruby on rails instalado na versão correta;
+    * Os fontes do projeto devem estar atualizados no Github;
 
 # Cheat Sheet dos comandos utilizados em aula
+Este Cheat Sheet de comandos é resultado da tarefa proposta na aula EAD do dia 07/10/2023.
 
 ## Comandos Linux
 Estes são os principais comandos Linux utilizados:
@@ -61,7 +70,7 @@ Inicializa um servidor web a partir da biblioteca WEBrick do Ruby, para receber 
 
 ### Gerador de código
     rails generate
-Utiliza **templates** para criar código *boilerplate* rapidamente, salvando muito tempo ao desenvolvedor. Rodar o comando sem qualquer outro argumento retornará uma lista de geradores disponíveis, também é possível conseguir outros geradores através de gems. É possível utilizar o alias ‘g’ para o comando `generate`, ex: `rails g`
+Utiliza **templates** para criar código *boilerplate* rapidamente, salvando muito tempo ao desenvolvedor. Rodar o comando sem qualquer outro argumento retornará uma lista de geradores disponíveis, também é possível conseguir outros geradores através de gems. É possível utilizar o alias ‘g’ para o comando `generate`, ex: `rails g`\
 Alguns dos templates disponíveis são:
 #### Scaffold
     rails g scaffold <Model> <atributo>:<tipo> ...
