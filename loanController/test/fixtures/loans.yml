@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: 2023-11-02
+  active: false
+  first_due_date: 2023-11-02
+  value: 9.99
+  number_of_installments: 1
+
+two:
+  date: 2023-11-02
+  active: false
+  first_due_date: 2023-11-02
+  value: 9.99
+  number_of_installments: 1

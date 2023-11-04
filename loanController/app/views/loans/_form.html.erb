@@ -1,0 +1,106 @@
+<%= form_with(model: loan, remote: true, id: 'loan_form') do |form| %>
+  <% if loan.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(loan.errors.count, "error") %> prohibited this loan from being saved:</h2>
+
+      <ul>
+      <% loan.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <p>A 20% fee will be charged on the loan amount.</p>
+
+  <div class="field">
+    <%= form.label :date %>
+    <%= form.date_field :date, readonly: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :employee_id %>
+    <%= form.select("employee_id", Employee.all.collect {|e| [e.name, e.id]}, {include_blank: 'Select...'})%>
+  </div>
+
+  <div class="field">
+    <%= form.label :value %>
+    <%= form.number_field :value %>
+  </div>
+
+  <div class="field">
+    <%= form.label :number_of_installments %>
+    <%= form.select("number_of_installments", @installment_amount_selector, {include_blank: 'Select...'})%>
+  </div>
+
+  <div class="field">
+    <%= form.label :first_due_date %>
+    <%= form.date_field :first_due_date %>
+  </div>
+
+  <div class="actions">
+    <%= button_tag "Visualize Installments", id: "generate-installments-button" %>
+  </div>
+
+  <div id="installments-table"></div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+
+<script>
+$(document).on("turbolinks:load", function() {
+
+    var installments = [];
+
+    $("#generate-installments-button").on("click", function(e) {
+      e.preventDefault();    
+
+      const payload = {
+        number_of_installments: $("#loan_number_of_installments option:selected").val(),
+        value: $("#loan_value").val(),
+        first_due_date: $("#loan_first_due_date").val()
+      };
+
+      $.ajax({
+          type: "POST",
+          url: window.location.origin + "/installments/generate_installments",
+          data: payload,
+          dataType: "json",
+          success: function(response) {
+              console.log(response);
+
+              installments = response;
+
+              var installmentTable = "<table><tr><th>Number</th><th>Due Date</th><th>Value</th></tr>";
+              response.forEach(function(installment) {
+                installmentTable += "<tr><td>" + installment.number + "</td><td>" + installment.due_date + "</td><td>" + installment.value + "</td></tr>";
+              });
+              installmentTable += "</table>";
+
+              const loanValue = response.map(i => Number(i.value)).reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+
+              installmentTable += "<p>Loan's total equals " + loanValue + "</p>";
+          
+              $("#installments-table").html(installmentTable);
+
+          },
+          error: function(error) {
+          console.log(error);
+          }
+      });
+
+      return false;
+    });
+
+
+    $("#loan_form").submit(function() {
+
+      $("#loan_form").append('<input type="hidden" name="loan[installments_attributes]" value=' + JSON.stringify(installments) + '>');
+
+      return true;
+    });
+
+    
+  });
+</script>

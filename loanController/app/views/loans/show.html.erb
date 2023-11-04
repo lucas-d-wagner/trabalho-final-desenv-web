@@ -1,0 +1,51 @@
+<p id="notice"><%= notice %></p>
+
+<h2>Loan</h2>
+
+<p>
+  <strong>Id:</strong>
+  <%= @loan.employee.name %>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @loan.date %>
+</p>
+
+<p>
+  <strong>Active:</strong>
+  <%= @loan.active ? 'YES' : 'NO' %>
+</p>
+
+<p>
+  <strong>Value:</strong>
+  <%= @loan.value %>
+</p>
+
+<h2>Installments</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Number</th>
+      <th>Due Date</th>
+      <th>Value</th>
+      <th>Paid Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @loan.installments.each do |i| %>
+      <tr>
+        <td><%= i.number %></td>
+        <td><%= i.due_date %></td>
+        <td><%= i.value %></td>
+        <td><%= i.paid_value %></td>
+        <% if i.value != i.paid_value %>
+        <td><%= link_to "Pay", { controller: 'installments', action: 'pay_installment', id: i.id }, method: :put %><td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+<%= link_to 'Back', loans_path %>

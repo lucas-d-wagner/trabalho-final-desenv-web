@@ -1,0 +1,20 @@
+I"ª(function() {
+  $(document).on('turbolinks:load', function() {
+    $('#generate-list-button').on('click', function(e) {
+      e.preventDefault();
+      $.ajax({
+        type: 'GET',
+        url: '/generate_list',
+        dataType: 'json',
+        success: function(data) {
+          console.log(data);
+        },
+        error: function(error) {
+          console.log(error);
+        }
+      });
+    });
+  });
+
+}).call(this);
+:ET
